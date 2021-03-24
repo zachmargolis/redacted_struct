@@ -21,22 +21,22 @@ RSpec.describe RedactedStruct do
       expect(struct_class_with_block.new(1).some_custom_method).to eq(100)
     end
 
-    it "accepts redacted_members in all the signatures of Struct.new" do
-      expect(RedactedStruct.new(:member, redacted_members: [:member]).new(1)).to be
+    it "accepts allowed_members in all the signatures of Struct.new" do
+      expect(RedactedStruct.new(:member, allowed_members: [:member]).new(1)).to be
       expect(
-        RedactedStruct.new(:member, keyword_init: true, redacted_members: [:member]).new(member: 1),
+        RedactedStruct.new(:member, keyword_init: true, allowed_members: [:member]).new(member: 1),
       ).to be
-      expect(RedactedStruct.new("AnotherClass", :member, redacted_members: [:member]).new(1)).to be
+      expect(RedactedStruct.new("AnotherClass", :member, allowed_members: [:member]).new(1)).to be
       expect(
         RedactedStruct.new(
           "AnotherOtherClass",
           :member,
           keyword_init: true,
-          redacted_members: [:member],
+          allowed_members: [:member],
         ).new(member: 1),
       ).to be
 
-      struct_class_with_block = RedactedStruct.new(:member, redacted_members: [:member]) do
+      struct_class_with_block = RedactedStruct.new(:member, allowed_members: [:member]) do
         def some_custom_method
           100
         end
@@ -52,22 +52,19 @@ RSpec.describe RedactedStruct do
       :password,
       :api_key,
       keyword_init: true,
-      redacted_members: [:password, :api_key],
+      allowed_members: [:username],
     )
   end
 
-  let(:named_struct_class) do
-  end
-
-  describe ".redacted_members" do
+  describe ".allowed_members" do
     it "is the list of redacted fields" do
-      expect(struct_class.redacted_members).to eq([:password, :api_key])
+      expect(struct_class.allowed_members).to eq([:username])
     end
   end
 
-  describe "#redacted_members" do
+  describe "#allowed_members" do
     it "is the list of redacted fields" do
-      expect(instance.redacted_members).to eq([:password, :api_key])
+      expect(instance.allowed_members).to eq([:username])
     end
   end
 
@@ -92,7 +89,7 @@ RSpec.describe RedactedStruct do
         :uuid,
         :session_secret,
         keyword_init: true,
-        redacted_members: [:session_secret],
+        allowed_members: [:uuid],
       ).new(uuid: "abcdef", session_secret: "secret")
 
       expect(named_instance.to_s).to eq(
@@ -114,7 +111,7 @@ RSpec.describe RedactedStruct do
         :uuid,
         :session_secret,
         keyword_init: true,
-        redacted_members: [:session_secret],
+        allowed_members: [:uuid],
       ).new(uuid: "abcdef", session_secret: "secret")
 
       expect(named_instance.to_s).to eq(

@@ -1,33 +1,33 @@
 # frozen_string_literal: true
 
-# A subclass of Struct that can label members that should be redacted when printing
+# A subclass of Struct that redacts members by default, and can allow some to be printed
 class RedactedStruct < Struct
   VERSION = "1.0.0"
 
-  def self.new(*name_and_members, keyword_init: nil, redacted_members: [], &block)
+  def self.new(*name_and_members, keyword_init: nil, allowed_members: [], &block)
     super(*name_and_members, keyword_init: keyword_init, &block).tap do |struct_class|
       struct_class.class_eval do
-        @redacted_members = Array(redacted_members)
+        @allowed_members = Array(allowed_members)
       end
     end
   end
 
   class << self
-    attr_reader :redacted_members
+    attr_reader :allowed_members
   end
 
-  def redacted_members
-    self.class.redacted_members
+  def allowed_members
+    self.class.allowed_members
   end
 
   def inspect
     name_or_nil = self.class.name ? " #{self.class.name}" : nil
 
     attributes = members.map do |member|
-      if redacted_members.include?(member)
-        "#{member}=[REDACTED]"
-      else
+      if allowed_members.include?(member)
         "#{member}=#{self[member].inspect}"
+      else
+        "#{member}=[REDACTED]"
       end
     end.join(" ")
 

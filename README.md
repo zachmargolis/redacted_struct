@@ -8,7 +8,7 @@ Config = RedactedStruct.new(
   :password,
   :timeout,
   keyword_init: true,
-  redacted_members: [:password]
+  allowed_members: [:username, :timeout]
 )
 
 Config.new(username: 'example', password: 'secret', timeout: 5)
