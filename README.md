@@ -1,6 +1,7 @@
 # RedactedStruct
 
-A version of Ruby's built-in Struct that can mark specific members to be redacted when printing instances:
+A version of Ruby's built-in Struct that redacts members when printing, and can allow specifying
+members that can be printed normally (an allowlist).
 
 ```ruby
 Config = RedactedStruct.new(
