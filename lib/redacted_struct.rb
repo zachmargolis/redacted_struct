@@ -2,7 +2,7 @@
 
 # A subclass of Struct that redacts members by default, and can allow some to be printed
 class RedactedStruct < Struct
-  VERSION = "1.0.0"
+  VERSION = "1.0.1"
 
   def self.new(*name_and_members, keyword_init: nil, allowed_members: [], &block)
     super(*name_and_members, keyword_init: keyword_init, &block).tap do |struct_class|

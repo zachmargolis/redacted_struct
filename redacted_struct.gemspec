@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Zach Margolis"]
 
   spec.summary       = "A Ruby Struct that can be redacted"
-  spec.description   = "Help prevent logging sensitive by accident"
+  spec.description   = "Help prevent logging sensitive information by accident"
   spec.homepage      = "https://github.com/zachmargolis/redacted_struct"
   spec.required_ruby_version = Gem::Requirement.new(">= 2.5.0")
 
