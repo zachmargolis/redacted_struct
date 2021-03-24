@@ -8,12 +8,28 @@ Config = RedactedStruct.new(
   :username,
   :password,
   :timeout,
+  :url,
   keyword_init: true,
   allowed_members: [:username, :timeout]
 )
 
-Config.new(username: 'example', password: 'secret', timeout: 5)
+config = Config.new(username: 'example', password: 'secret', timeout: 5, url: 'https://example.com')
 => #<struct Config username="example" password=[REDACTED] timeout=5>
+```
+
+## Pretty-Printing
+
+The struct will automatically redact itself when pretty-printed via `#pp`:
+
+```ruby
+require 'pp'
+
+pp config
+#<struct Config
+ username="example",
+ password=[REDACTED],
+ timeout=5,
+ url="https://example.com">
 ```
 
 ## Installation
