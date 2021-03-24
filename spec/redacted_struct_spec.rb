@@ -119,4 +119,23 @@ RSpec.describe RedactedStruct do
       )
     end
   end
+
+  describe "#pp/#pretty_inspect" do
+    require "pp"
+
+    it "redacts when pretty printed" do
+      io = StringIO.new
+
+      PP.pp instance, io, 30
+
+      # rubocop:disable Layout/TrailingWhitespace
+      expect(io.string).to eq <<~STR
+        #<struct 
+         username="example",
+         password=[REDACTED],
+         api_key=[REDACTED]>
+      STR
+      # rubocop:enable Layout/TrailingWhitespace
+    end
+  end
 end
