@@ -11,10 +11,13 @@ jobs:
       - image: cimg/ruby:<< parameters.ruby-version >>
     steps:
       - checkout
-      - ruby/install-deps:
-          bundler-version: '1.17.2'
-          with-cache: false
-      - ruby/rspec-test
+      - run:
+          name: Which bundler?
+          command: bundle -v
+      - ruby/bundle-install
+      - run:
+          name: RSpec
+          command: bundle exec rake spec
       - run:
           name: Rubocop
           command: bundle exec rubocop
