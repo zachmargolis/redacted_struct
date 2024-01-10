@@ -32,6 +32,23 @@ pp config
  url="https://example.com">
 ```
 
+## RedactedData
+
+Redaction is also supported for Ruby's built-in Data class:
+
+```ruby
+Config = RedactedData.define(
+  :username,
+  :password,
+  :timeout,
+  :url,
+  allowed_members: [:username, :timeout]
+)
+
+config = Config.new(username: 'example', password: 'secret', timeout: 5, url: 'https://example.com')
+=> #<data Config username="example" password=[REDACTED] timeout=5>
+```
+
 ## Installation
 
 Add this line to your application's Gemfile:
