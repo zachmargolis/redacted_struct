@@ -11,8 +11,8 @@ module Redactable
   def inspect
     name_or_nil = self.class.name ? " #{self.class.name}" : nil
 
+    members_h = to_h
     attributes = members.map do |member|
-      members_h = to_h
       if allowed_members.include?(member)
         "#{member}=#{members_h[member].inspect}"
       else
@@ -32,13 +32,13 @@ module Redactable
   # rubocop:disable all
   def pretty_print(q)
     q.group(1, sprintf("#<%s %s", base_name_for_inspection, PP.mcall(self, Kernel, :class).name), '>') {
+      members_h = to_h
       q.seplist(PP.mcall(self, base_type_for_pp, :members), lambda { q.text "," }) {|member|
         q.breakable
         q.text member.to_s
         q.text '='
         q.group(1) {
           q.breakable ''
-          members_h = to_h
           if allowed_members.include?(member)
             q.pp members_h[member]
           else
