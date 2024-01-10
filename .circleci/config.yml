@@ -11,6 +11,8 @@ jobs:
       - image: cimg/ruby:<< parameters.ruby-version >>
     steps:
       - checkout
+      - run:
+          command: bundle lock --add-platform x86_64-linux
       - ruby/install-deps:
           bundler-version: '1.17.2'
           with-cache: false
