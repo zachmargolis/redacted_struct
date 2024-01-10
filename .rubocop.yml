@@ -23,6 +23,12 @@ Style/TrailingCommaInArguments:
 Layout/LineLength:
   Max: 120
 
+# require "pp" in specs is flagged in Ruby 2.6 but not in other ones
+# and doing a point disable gets a "unused lint" warning, so this is easier
+# to disable here
+Lint/RedundantRequireStatement:
+    Enabled: false
+
 Metrics/BlockLength:
   Exclude:
     - "spec/**/*.rb"
