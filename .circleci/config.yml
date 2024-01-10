@@ -1,18 +1,29 @@
 version: 2.1
 orbs:
-  ruby: circleci/ruby@0.1.2
+  ruby: circleci/ruby@1.1
 
 jobs:
-  build:
+  test:
+    parameters:
+      ruby-version:
+        type: string
     docker:
-      - image: cimg/ruby:2.6.5
-    executor: ruby/default
+      - image: cimg/ruby:<< parameters.ruby-version >>
     steps:
       - checkout
+      - ruby/install-deps:
+          bundler-version: '1.17.2'
+          with-cache: false
+      - ruby/rspec-test
       - run:
-          name: Which bundler?
-          command: bundle -v
-      - ruby/bundle-install
-      - run:
-          name: Run specs
-          command: bundle exec rake spec
+          name: Rubocop
+          command: bundle exec rubocop
+
+workflows:
+  build_and_test:
+    jobs:
+      - test:
+          matrix:
+            parameters:
+              # https://github.com/CircleCI-Public/cimg-ruby
+              ruby-version: ["2.6", "3.1", "3.2"]
