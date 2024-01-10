@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Style/MultilineIfModifier
 RSpec.describe RedactedData do
   it "supports all the signatures of Data.define" do
     expect(RedactedData.define(:member).new(1)).to be
@@ -89,3 +90,4 @@ RSpec.describe RedactedData do
     end
   end
 end if defined?(RedactedData)
+# rubocop:enable Style/MultilineIfModifier
