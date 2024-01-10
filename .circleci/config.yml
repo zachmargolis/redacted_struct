@@ -12,6 +12,8 @@ jobs:
     steps:
       - checkout
       - run:
+          name: "Add platform for Bundler"
+          description: "Normally the platforms lives in Gemfile.lock, but as a gem this repo does not have one, CircleCI fails if there are no platforms"
           command: bundle lock --add-platform x86_64-linux
       - ruby/install-deps:
           bundler-version: '1.17.2'
