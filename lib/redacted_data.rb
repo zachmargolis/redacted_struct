@@ -13,6 +13,6 @@ class RedactedData < Data
       end
     end
   end
-end if defined?(Data)
+end if defined?(Data) && Data.respond_to?(:define)
 # rubocop:enable Style/MultilineIfModifier
 # rubocop:enable Style/Documentation
