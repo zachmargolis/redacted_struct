@@ -88,4 +88,4 @@ RSpec.describe RedactedData do
       # rubocop:enable Layout/TrailingWhitespace
     end
   end
-end
+end if defined?(RedactedData)
