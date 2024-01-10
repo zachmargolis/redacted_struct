@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
+# rubocop:disable Style/Documentation
 # rubocop:disable Style/MultilineIfModifier
-# A sublcass of Data that redacts members by default, and can allow some to be printed
+# A subclass of Data that redacts members by default, and can allow some to be printed
 class RedactedData < Data
   include Redactable
 
@@ -14,3 +15,4 @@ class RedactedData < Data
   end
 end if defined?(Data)
 # rubocop:enable Style/MultilineIfModifier
+# rubocop:enable Style/Documentation
